@@ -1,0 +1,78 @@
+---
+title: "Hello You!"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+<p>You can write HTML and embed a Google Form</p>
+
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd9I3l0IX3aXUb7_T_Ed7OGO6VcPpI-DPdlWnfMT1q2X_nZFw/viewform?embedded=true" width="640" height="1452" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+## Load packages
+
+```{r}
+library(gsheet)
+library(tidyverse)
+library(quanteda)
+library(ggplot2)
+library(plotly)
+```
+
+
+## Read data and inspect
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1qmbPdvspf9Vg_Eab9fT34ubudF_vklJwKxf0UuJrHvw/edit?usp=sharing"
+
+rawDF <- gsheet2tbl(url)
+
+colVec <- c("time", "github", "languages", "proficiency")
+colnames(rawDF) <- colVec
+summary(rawDF)
+head(rawDF)
+```
+
+## Count languages
+
+```{r}
+languages <- as.character(rawDF$languages) %>% corpus
+summary(languages)
+
+dfm <- tokens(languages) %>%
+  dfm  %>% convert(to="data.frame") %>%
+  select(!contains(",")) %>%
+  summarise(across(where(is.numeric), ~ sum(.x, na.rm = TRUE))) %>%
+  pivot_longer(everything(), names_to = "language", values_to = "count") 
+dfm
+```
+
+## Create plots
+
+### Simple
+
+```{r}
+proficiency <- table(rawDF$proficiency)
+barplot(proficiency,
+   xlab="Proficiency Score", ylab="Score Count")
+```
+
+### Styled
+```{r}
+p1 <- ggplot(dfm) +
+  aes(x=language, y=count, fill=language) +
+  geom_col()
+p1
+```
+
+### Interactive
+
+```{r}
+ggplotly(p1)
+```
+
+
