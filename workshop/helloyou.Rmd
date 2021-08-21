@@ -9,7 +9,7 @@ When you save the notebook, an HTML file containing the code and output will be 
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
-<p>You can write HTML and embed a Google Form</p>
+<p>You can write HTML (and for instance embed a Google Form)</p>
 
 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd9I3l0IX3aXUb7_T_Ed7OGO6VcPpI-DPdlWnfMT1q2X_nZFw/viewform?embedded=true" width="640" height="1452" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 
@@ -58,7 +58,7 @@ dfm
 ```{r}
 proficiency <- table(rawDF$proficiency)
 barplot(proficiency,
-   xlab="Proficiency Score", ylab="Score Count")
+   xlab="Proficiency Score", ylab="Score Count", col="red")
 ```
 
 ### Styled
