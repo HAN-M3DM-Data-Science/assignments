@@ -31,8 +31,8 @@ url <- "https://docs.google.com/spreadsheets/d/1qmbPdvspf9Vg_Eab9fT34ubudF_vklJw
 
 rawDF <- gsheet2tbl(url)
 
-colVec <- c("time", "github", "languages", "proficiency")
-colnames(rawDF) <- colVec
+nameVec <- c("time", "github", "languages", "proficiency")
+colnames(rawDF) <- nameVec
 summary(rawDF)
 head(rawDF)
 ```
