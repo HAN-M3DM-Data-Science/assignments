@@ -44,7 +44,8 @@ languages <- as.character(rawDF$languages) %>% corpus
 summary(languages)
 
 dfm <- tokens(languages) %>%
-  dfm  %>% convert(to="data.frame") %>%
+  dfm  %>%
+  convert(to="data.frame") %>%
   select(!contains(",")) %>%
   summarise(across(where(is.numeric), ~ sum(.x, na.rm = TRUE))) %>%
   pivot_longer(everything(), names_to = "language", values_to = "count") 
@@ -58,7 +59,7 @@ dfm
 ```{r}
 proficiency <- table(rawDF$proficiency)
 barplot(proficiency,
-   xlab="Proficiency Score", ylab="Score Count", col="red")
+   xlab="Proficiency Score", ylab="Score Count", col="skyblue")
 ```
 
 ### Styled
