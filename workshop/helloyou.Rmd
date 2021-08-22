@@ -20,6 +20,7 @@ library(gsheet)
 library(tidyverse)
 library(quanteda)
 library(ggplot2)
+library(wordcloud)
 library(plotly)
 ```
 
@@ -76,4 +77,9 @@ p1
 ggplotly(p1)
 ```
 
+### Informative
+
+```{r}
+wordcloud(dfm$language, dfm$count)
+```
 
